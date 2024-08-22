@@ -86,7 +86,30 @@
 		</dependency-->
 
 	</dependencies>
-
+	<repositories>
+		<repository>
+		  <id>oscarllamas6</id>
+		  <url>https://pkgs.dev.azure.com/oscarllamas6/_packaging/oscarllamas6/maven/v1</url>
+		  <releases>
+		    <enabled>true</enabled>
+		  </releases>
+		  <snapshots>
+		    <enabled>true</enabled>
+		  </snapshots>
+		</repository>
+	</repositories>
+	<distributionManagement>
+		<repository>
+		  <id>oscarllamas6</id>
+		  <url>https://pkgs.dev.azure.com/oscarllamas6/_packaging/oscarllamas6/maven/v1</url>
+		  <releases>
+		    <enabled>true</enabled>
+		  </releases>
+		  <snapshots>
+		    <enabled>true</enabled>
+		  </snapshots>
+		</repository>
+	</distributionManagement>
 	<build>
 		<plugins>
 			<plugin>
