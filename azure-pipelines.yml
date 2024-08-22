@@ -11,6 +11,11 @@ stages:
       - job: job01
         displayName: "My CI"
         steps:
+          - task: MavenAuthenticate@0
+            inputs:
+              artifactsFeeds: 'oscarllamas6'
+            displayName: "Artifacts Auth"
+
           - task: Maven@4
             inputs:
               mavenPomFile: 'pom.xml'
@@ -23,6 +28,20 @@ stages:
               effectivePomSkip: false
               sonarQubeRunAnalysis: false
             displayName: "Compile"
+
+          - task: Maven@4
+            inputs:
+              mavenPomFile: 'pom.xml'
+              goals: 'deploy'
+              publishJUnitResults: true
+              testResultsFiles: '**/surefire-reports/TEST-*.xml'
+              javaHomeOption: 'JDKVersion'
+              mavenVersionOption: 'Default'
+              mavenAuthenticateFeed: false
+              effectivePomSkip: false
+              sonarQubeRunAnalysis: false
+            displayName: "Publish to Azure DevOps Artifacts"
+            
 
           - task: CopyFiles@2
             inputs:
