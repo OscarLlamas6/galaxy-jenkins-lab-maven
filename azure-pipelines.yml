@@ -4,29 +4,34 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
+stages:
+  - stage: Build
+    displayName: "Continuious Integration"
+    jobs:
+      - job: job01
+        displayName: "My CI"
+        steps:
+          - task: Maven@4
+            inputs:
+              mavenPomFile: 'pom.xml'
+              publishJUnitResults: true
+              testResultsFiles: '**/surefire-reports/TEST-*.xml'
+              javaHomeOption: 'JDKVersion'
+              jdkVersionOption: '1.11'
+              mavenVersionOption: 'Default'
+              mavenAuthenticateFeed: false
+              effectivePomSkip: false
+              sonarQubeRunAnalysis: false
+            displayName: "Compile"
 
-- task: Maven@4
-  inputs:
-    mavenPomFile: 'pom.xml'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.11'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
-  displayName: "Compile"
-
-- task: CopyFiles@2
-  inputs:
-    Contents: 'target/*.jar'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-  displayName: "Copy artifacts"
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'artifact'
-    publishLocation: 'Container'
-  displayName: "Publish artifacts"
+          - task: CopyFiles@2
+            inputs:
+              Contents: 'target/*.jar'
+              TargetFolder: '$(Build.ArtifactStagingDirectory)'
+            displayName: "Copy artifacts"
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'artifact'
+              publishLocation: 'Container'
+            displayName: "Publish artifacts"
