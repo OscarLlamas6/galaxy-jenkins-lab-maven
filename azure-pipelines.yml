@@ -16,6 +16,25 @@ stages:
               artifactsFeeds: 'oscarllamas6'
             displayName: "Artifacts Auth"
 
+          - task: SonarQubePrepare@6
+            inputs:
+              SonarQube: 'sc_sonarqube_galaxy'
+              scannerMode: 'CLI'
+              configMode: 'manual'
+              cliProjectKey: 'devsecops-galaxy-lab2'
+              cliProjectName: 'devsecops-galaxy-lab2'
+              cliSources: '.'
+            displayName: "Prepare SonarQube Config"
+            
+          - task: SonarQubeAnalyze@6
+            inputs:
+              jdkversion: 'JAVA_HOME_17_X64'
+            displayName: "Analizing with SonarQube"
+
+          - task: SonarQubePublish@6
+            inputs:
+              pollingTimeoutSec: '300'
+            displayName: "Display SonarQube Results"
           - task: Maven@4
             inputs:
               mavenPomFile: 'pom.xml'
