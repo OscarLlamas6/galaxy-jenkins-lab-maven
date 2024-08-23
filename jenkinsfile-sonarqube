@@ -1,7 +1,7 @@
 pipeline {
 
     agent {
-        docker { image 'maven:3.6.3-openjdk-11-slim' }
+        docker { image 'maven:3.8.5-openjdk-17-slim' }
     }
 
     stages {
@@ -22,9 +22,8 @@ pipeline {
             steps {
                 script{
                     def scannerHome = tool 'scanner-default'
-                    withSonarQubeEnv('sonar-server') {
+                    withSonarQubeEnv('devsecops-default-scanner') {
                         sh "${scannerHome}/bin/sonar-scanner \
-                            -Dsonar.organization=az400atruciosc \
                             -Dsonar.projectKey=labmaven01 \
                             -Dsonar.projectName=labmaven01 \
                             -Dsonar.sources=src/main \
