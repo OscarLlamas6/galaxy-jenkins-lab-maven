@@ -21,8 +21,8 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 script{
-                    def scannerHome = tool 'scanner-default'
-                    withSonarQubeEnv('devsecops-default-scanner') {
+                    def scannerHome = tool 'devsecops-default-scanner'
+                    withSonarQubeEnv('devsecops-default-scanner-server') {
                         sh "${scannerHome}/bin/sonar-scanner \
                             -Dsonar.projectKey=labmaven01 \
                             -Dsonar.projectName=labmaven01 \
