@@ -15,6 +15,18 @@ stages:
             inputs:
               artifactsFeeds: 'oscarllamas6'
             displayName: "Artifacts Auth"
+          - task: Maven@4
+            inputs:
+              mavenPomFile: 'pom.xml'
+              publishJUnitResults: true
+              testResultsFiles: '**/surefire-reports/TEST-*.xml'
+              javaHomeOption: 'JDKVersion'
+              jdkVersionOption: '1.17'
+              mavenVersionOption: 'Default'
+              mavenAuthenticateFeed: false
+              effectivePomSkip: false
+              sonarQubeRunAnalysis: false
+            displayName: "Compile"
 
           - task: SonarQubePrepare@6
             inputs:
@@ -23,7 +35,6 @@ stages:
               configMode: 'manual'
               cliProjectKey: 'devsecops-galaxy-lab2'
               cliProjectName: 'devsecops-galaxy-lab2'
-              cliSources: '.'
               extraProperties: |
                 sonar.exclusions=**/*.bin
                 sonar.projectKey=devsecops-galaxy-lab2
@@ -54,18 +65,7 @@ stages:
             inputs:
               pollingTimeoutSec: '300'
             displayName: "Display SonarQube Results"
-          - task: Maven@4
-            inputs:
-              mavenPomFile: 'pom.xml'
-              publishJUnitResults: true
-              testResultsFiles: '**/surefire-reports/TEST-*.xml'
-              javaHomeOption: 'JDKVersion'
-              jdkVersionOption: '1.17'
-              mavenVersionOption: 'Default'
-              mavenAuthenticateFeed: false
-              effectivePomSkip: false
-              sonarQubeRunAnalysis: false
-            displayName: "Compile"
+
 
           - task: Maven@4
             inputs:
