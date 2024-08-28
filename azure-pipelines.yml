@@ -38,6 +38,17 @@ stages:
               organization: 'oscarllamasusac'
             displayName: "Snyk Scan"
 
+          - task: SnykSecurityScan@1
+            inputs:
+              serviceConnectionEndpoint: 'snyk_galaxy'
+              testType: 'app'
+              monitorWhen: always
+              codeSeverityThreshold: 'medium'
+              failOnIssues: false
+              projectName: '$(Build.Repository.Name)'
+              organization: 'oscarllamasusac'
+            displayName: "SCA Snyk Scan"
+
           - task: SonarQubePrepare@6
             inputs:
               SonarQube: 'sc_sonarqube_galaxy'
