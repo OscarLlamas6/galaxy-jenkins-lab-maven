@@ -28,6 +28,15 @@ stages:
               sonarQubeRunAnalysis: false
             displayName: "Compile"
 
+          - task: SnykSecurityScan@1
+            inputs:
+              serviceConnectionEndpoint: 'snyk_galaxy'
+              testType: 'code'
+              codeSeverityThreshold: 'medium'
+              failOnIssues: false
+              projectName: '$(Build.Repository.Name)'
+              organization: 'oscarllamasusac'
+
           - task: SonarQubePrepare@6
             inputs:
               SonarQube: 'sc_sonarqube_galaxy'
