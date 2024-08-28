@@ -36,6 +36,7 @@ stages:
               failOnIssues: false
               projectName: '$(Build.Repository.Name)'
               organization: 'oscarllamasusac'
+            displayName: "Snyk Scan"
 
           - task: SonarQubePrepare@6
             inputs:
